@@ -1,0 +1,50 @@
+﻿@{
+    ViewData["Title"] = "Kategoriler";
+}
+
+<div class="row mb-4">
+    <div class="col">
+        <h3 class="display-4 border-bottom">@ViewData["Title"]</h3>
+    </div>
+</div>
+<div class="row mb-4">
+    <div class="col">
+        <a  class="btn btn-primary btn-sm" asp-action="Create"><i class=="fa fa-plus"></i> Kategori Ekle</a>
+    </div>
+</div>
+
+<div class="row mb-4">
+    <div class="col table-responsive">
+        <table class="table table-hover table-striped table-sm small" >
+            <thead>
+                <tr>
+                    <th>Kategori</th>
+                    <th>Açıklama</th>
+                    <th>Oluşturan</th>
+                    <th>Oluşturma Tarihi</th>
+                    <th>Güncelleyen</th>
+                    <th>Güncelleme Tarihi</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @for(int i = 0; i < 10; i++)
+                {
+                    <tr>
+                        <td>@NameData.GetCompanyName()</td>
+                        <td>@TextData.GetSentence()</td>
+                        <td>@NameData.GetFullName() </td>
+                        <td>@DateTimeData.GetDatetime()</td>
+                        <td>@NameData.GetFullName()</td>
+                        <td>@DateTimeData.GetDatetime()</td>
+                        <td class="text-center">
+                            <a class="btn btn-warning btn-sm" asp-action="Edit"><i class="fa fa-edit"></i></a>
+                            <a class="btn btn-info btn-sm" asp-action="Details"><i class="fa fa-search"></i></a>
+                            <a class="btn btn-danger btn-sm" asp-action="Delete"><i class="fa fa-trash"></i></a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

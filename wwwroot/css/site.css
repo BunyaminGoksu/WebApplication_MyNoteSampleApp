@@ -1,0 +1,27 @@
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+.login-box {
+    border: 1px solid #ddd;
+    box-shadow: 2px 2px 15px #808080;
+}
+.bshadow{
+    box-shadow:2px 2px 15px #808080;
+
+}
