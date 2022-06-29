@@ -1,6 +1,39 @@
 ﻿@{
-    ViewData["Title"] = "Kategori Detay";
+	ViewData["Title"] = "Kategori Detay";
 }
-<h1>@ViewData["Title"]</h1>
+<div class="row mb-4">
+	<div class="col">
+		<h3 class="display-4 border-bottom">@ViewData["Title"]</h3>
+	</div>
+</div>
 
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="row">
+	<div class="col-4">
+		<dl class="row">
+			<dt class="col-4">Kategori Adı</dt>
+			<dd class="col-8">@NameData.GetCompanyName()</dd>
+
+			<dt class="col-4">Kategori Açıklama</dt>
+			<dd class="col-8">@TextData.GetSentence()</dd>
+
+			<dt class="col-4">Oluşturan</dt>
+			<dd class="col-8">@NameData.GetFullName()</dd>
+
+			<dt class="col-4">Oluşturma Tarihi</dt>
+			<dd class="col-8">@DateTimeData.GetDatetime()</dd>
+
+			<dt class="col-4">Güncelleyen</dt>
+			<dd class="col-8">@NameData.GetFullName()</dd>
+
+			<dt class="col-4">Güncelleme Tarihi</dt>
+			<dd class="col-8">@DateTimeData.GetDatetime()</dd>
+		</dl>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col">
+		<a  class="btn btn-warning btn-sm" asp-action="Edit"><i class="fa fa-edit"></i> Düzenle</a>
+		<a class="btn btn-secondary btn-sm" asp-action="Index"><i class="fa fa-arrow-left"></i> Listeye Dön </a>
+	</div>
+</div> 

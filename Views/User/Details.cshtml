@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Kategori Sil";
+	ViewData["Title"] = "Kategori Detay";
 }
 <div class="row mb-4">
 	<div class="col">
@@ -7,23 +7,27 @@
 	</div>
 </div>
 
-<div class="row mb-4">
-	<div class="col">
-		<p class="text-danger">
-			İlgili kategoriyi silmek istediğinize emin misiniz?<br />
-		<small>Bu işlem geri alınamaz ve kategoriye ait yazılarında silinmesini gerektirir!</small>
-			</p>
-	</div>
-</div>
-
 <div class="row">
 	<div class="col-4">
 		<dl class="row">
-			<dt class="col-4">Kategori Adı</dt>
-			<dd class="col-8">@NameData.GetCompanyName()</dd>
+			<dt class="col-4">Ad Soyad</dt>
+			<dd class="col-8">@NameData.GetFullName()</dd>
 
-			<dt class="col-4">Kategori Açıklama</dt>
-			<dd class="col-8">@TextData.GetSentence()</dd>
+			<dt class="col-4">Kullanıcı Adı</dt>
+			<dd class="col-8">@NameData.GetTitleName()</dd>
+
+			<dt class="col-4">E-Posta Adresi</dt>
+			<dd class="col-8">@NetworkData.GetEmail()</dd>
+
+			<dt class="col-4">Aktif</dt>
+			<dd class="col-8">
+				<i class="fa fa-@(BooleanData.GetBoolean() ? "check text-success" : "times text-danger")"></i>
+			</dd>
+
+			<dt class="col-4">Yönetici</dt>
+			<dd class="col-8">
+				<i class="fa fa-@(BooleanData.GetBoolean() ? "check text-success" : "times text-danger")"></i>
+			</dd>
 
 			<dt class="col-4">Oluşturan</dt>
 			<dd class="col-8">@NameData.GetFullName()</dd>
@@ -42,10 +46,7 @@
 
 <div class="row">
 	<div class="col">
-		<form method="post" asp-action="Delete">
-			<button type="submit"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Kategori Sil</button>
+		<a class="btn btn-warning btn-sm" asp-action="Edit"><i class="fa fa-edit"></i> Düzenle</a>
 		<a class="btn btn-secondary btn-sm" asp-action="Index"><i class="fa fa-arrow-left"></i> Listeye Dön </a>
-		</form>
-		
 	</div>
 </div> 

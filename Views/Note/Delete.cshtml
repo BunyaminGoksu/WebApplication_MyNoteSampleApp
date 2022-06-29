@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Kategori Sil";
+    ViewData["Title"] = "Yazı Sil";
 }
 <div class="row mb-4">
 	<div class="col">
@@ -10,8 +10,8 @@
 <div class="row mb-4">
 	<div class="col">
 		<p class="text-danger">
-			İlgili kategoriyi silmek istediğinize emin misiniz?<br />
-		<small>Bu işlem geri alınamaz ve kategoriye ait yazılarında silinmesini gerektirir!</small>
+			İlgili yazıyı silmek istediğinize emin misiniz?<br />
+		<small>Bu işlem geri alınamaz!</small>
 			</p>
 	</div>
 </div>
@@ -19,11 +19,25 @@
 <div class="row">
 	<div class="col-4">
 		<dl class="row">
-			<dt class="col-4">Kategori Adı</dt>
+			<dt class="col-4">Kategori</dt>
 			<dd class="col-8">@NameData.GetCompanyName()</dd>
 
-			<dt class="col-4">Kategori Açıklama</dt>
+			<dt class="col-4">Başlık</dt>
 			<dd class="col-8">@TextData.GetSentence()</dd>
+
+			<dt class="col-4">Özet</dt>
+			<dd class="col-8">@TextData.GetSentences(2)</dd>
+
+			<dt class="col-4">Taslak</dt>
+			<dd class="col-8">
+				<i class="fa fa-@(BooleanData.GetBoolean() ? "check text-success" : "times text-danger")"></i>
+			</dd>
+
+			<dt class="col-4">Beğeni Adedi</dt>
+			<dd class="col-8">@NumberData.GetNumber(1,100)</dd>
+
+			<dt class="col-4">Yorum Adedi</dt>
+			<dd class="col-8">@NumberData.GetNumber(1,100)</dd>
 
 			<dt class="col-4">Oluşturan</dt>
 			<dd class="col-8">@NameData.GetFullName()</dd>
@@ -33,9 +47,6 @@
 
 			<dt class="col-4">Güncelleyen</dt>
 			<dd class="col-8">@NameData.GetFullName()</dd>
-
-			<dt class="col-4">Güncelleme Tarihi</dt>
-			<dd class="col-8">@DateTimeData.GetDatetime()</dd>
 		</dl>
 	</div>
 </div>
@@ -43,7 +54,7 @@
 <div class="row">
 	<div class="col">
 		<form method="post" asp-action="Delete">
-			<button type="submit"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Kategori Sil</button>
+			<button type="submit"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Yazı Sil</button>
 		<a class="btn btn-secondary btn-sm" asp-action="Index"><i class="fa fa-arrow-left"></i> Listeye Dön </a>
 		</form>
 		

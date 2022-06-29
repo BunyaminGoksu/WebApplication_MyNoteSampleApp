@@ -1,6 +1,27 @@
 ﻿@{
     ViewData["Title"] = "Kategori Güncelle";
 }
-<h1>@ViewData["Title"]</h1>
-
-<p>Use this page to detail your site's privacy policy.</p>
+<div class="row mb-4">
+    <div class="col">
+        <h3 class="display-4 border-bottom">@ViewData["Title"]</h3>
+    </div>
+</div>
+<div class="row">
+    <div class="col-4">
+        	<form>
+			<div class="form-group mb-3">
+				<label for="CategoryName" class="font-weight-bold small">Kategori Adı</label>
+				<input type="text" class="form-control" id="CategoryName" placeholder="@NameData.GetCompanyName()" value="@NameData.GetCompanyName()">
+			</div>
+			<div class="form-group mb-3">
+				<label for="CategoryDesc" class="font-weight-bold small">Kategori Açıklama</label>
+				<textarea id="CategoryDesc" cols="3" class="form-control" placeholder="@TextData.GetSentence()">@TextData.GetSentence()</textarea>
+			</div>
+			
+			<div>
+			<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Kaydet</button>
+			<a class="btn btn-secondary btn-sm" asp-action="Index"><i class="fa fa-arrow-left"></i> Listeye Dön </a>
+			</div>
+		</form>
+    </div>
+</div>

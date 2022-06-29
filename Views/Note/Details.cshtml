@@ -1,0 +1,53 @@
+﻿@{
+	ViewData["Title"] = "Yazı Detay";
+}
+<div class="row mb-4">
+	<div class="col">
+		<h3 class="display-4 border-bottom">@ViewData["Title"]</h3>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-6">
+		<dl class="row">
+			<dt class="col-4">Kategori</dt>
+			<dd class="col-8">@NameData.GetCompanyName()</dd>
+
+			<dt class="col-4">Başlık</dt>
+			<dd class="col-8">@TextData.GetSentence()</dd>
+
+			<dt class="col-4">Özet</dt>
+			<dd class="col-8">@TextData.GetSentences(2)</dd>
+
+			<dt class="col-4">Taslak</dt>
+			<dd class="col-8">
+				<i class="fa fa-@(BooleanData.GetBoolean() ? "check text-success" : "times text-danger")"></i>
+			</dd>
+
+			<dt class="col-4">Beğeni Adedi</dt>
+			<dd class="col-8">@NumberData.GetNumber(1,100)</dd>
+
+			<dt class="col-4">Yorum Adedi</dt>
+			<dd class="col-8">@NumberData.GetNumber(1,100)</dd>
+
+			<dt class="col-4">Oluşturan</dt>
+			<dd class="col-8">@NameData.GetFullName()</dd>
+
+			<dt class="col-4">Oluşturma Tarihi</dt>
+			<dd class="col-8">@DateTimeData.GetDatetime()</dd>
+
+			<dt class="col-4">Güncelleyen</dt>
+			<dd class="col-8">@NameData.GetFullName()</dd>
+
+			<dt class="col-4">Detay</dt>
+			<dd class="col-8">@TextData.GetSentences(3)</dd>
+		</dl>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col">
+		<a class="btn btn-warning btn-sm" asp-action="Edit"><i class="fa fa-edit"></i> Düzenle</a>
+		<a class="btn btn-secondary btn-sm" asp-action="Index"><i class="fa fa-arrow-left"></i> Listeye Dön </a>
+	</div>
+</div> 
