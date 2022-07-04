@@ -36,7 +36,7 @@ namespace WebApplication_MyNoteSampleApp.Models.Entities
 
         public virtual List<Comment> Comments { get; set; }
 
-        public virtual List<User> LikedUsers { get; set; }
+        public virtual List<LikedNote> Likes{ get; set; }
 
     }
 }
