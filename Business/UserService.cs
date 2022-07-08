@@ -8,10 +8,10 @@ namespace WebApplication_MyNoteSampleApp.Business
     {
         private DatabaseContext _db = new DatabaseContext();
 
-        public ServiceResult Register(RegisterViewModel model)
+        public ServiceResult<object> Register(RegisterViewModel model)
         {
 
-            ServiceResult result = new ServiceResult();
+            ServiceResult<object> result = new ServiceResult<object>();
 
             model.Username = model.Username.Trim().ToLower();
 
@@ -47,20 +47,48 @@ namespace WebApplication_MyNoteSampleApp.Business
             return result;
         }
 
-        public ServiceResult Login(LoginViewModel model)
+      
+        
+        
+        public ServiceResult<User> Login(LoginViewModel model)
         {
-            ServiceResult result = new ServiceResult();
+            ServiceResult<User> result = new ServiceResult<User>();
 
             model.Username = model.Username.Trim().ToLower();
 
-            if (_db.Users.Any(x => x.Username.ToLower()== model.Username 
-            && x.Password == model.Password)==false)
+          //  var user = _db.Users.Any(x => x.Username.ToLower() == model.Username
+          //&& x.Password == model.Password);
+
+
+            var user = _db.Users.SingleOrDefault(x => x.Username.ToLower() == model.Username
+            && x.Password == model.Password);
+
+
+            if (user == null)
             {
-                result.AddError("Hatalı kullanıcı adı yada şifre!");
+                result.AddError("Hatalı kullanıcı adı yada şifre");
+            }
+            else
+            {
+                user.Password =String.Empty;
+                result.Data = user;
             }
 
 
             return result;
+        }
+
+        public ServiceResult<List<User>> List()
+        {
+            var users = _db.Users.ToList();
+            users.ForEach(user => user.Password = String.Empty);
+
+            ServiceResult<List<User>> result = new ServiceResult<List<User>>();
+
+            result.Data = users;
+
+            return result;
+
         }
     }
 }

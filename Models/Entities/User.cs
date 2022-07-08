@@ -10,7 +10,7 @@ namespace WebApplication_MyNoteSampleApp.Models.Entities
         public int Id { get; set; }
 
         [StringLength(60), Display(Name = "Ad Soyad")]
-        public string FullName { get; set; }
+        public string? FullName { get; set; }
 
         [Required,StringLength(60) ,Display(Name = "Kullanıcı Adı")]
         public string Username { get; set; }

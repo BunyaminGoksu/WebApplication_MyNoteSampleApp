@@ -3,6 +3,13 @@ using WebApplication_MyNoteSampleApp.Models.Context;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddDistributedMemoryCache();
+builder.Services.AddSession(options => 
+{
+    options.Cookie.Name = "notes.session";
+    options.IdleTimeout = TimeSpan.FromMinutes(20);
+});
+
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
@@ -23,6 +30,8 @@ if (!app.Environment.IsDevelopment())
     app.UseExceptionHandler("/Home/Error");
 }
 app.UseStaticFiles();
+
+app.UseSession();
 
 app.UseRouting();
 

@@ -1,7 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApplication_MyNoteSampleApp.Business;
+using WebApplication_MyNoteSampleApp.Core;
 using WebApplication_MyNoteSampleApp.Models;
+using WebApplication_MyNoteSampleApp.Models.Entities;
 
 namespace WebApplication_MyNoteSampleApp.Controllers
 {
@@ -29,17 +32,29 @@ namespace WebApplication_MyNoteSampleApp.Controllers
         {
             if (ModelState.IsValid)
             {
-                ServiceResult result = _userService.Login(model);
+                ServiceResult<User> result = _userService.Login(model);
+               
                 if (!result.IsError)
+                {
+                    HttpContext.Session.SetInt32(Constants.UserId,result.Data.Id);
+                    HttpContext.Session.SetString(Constants.UserName, result.Data.Username);
+                    HttpContext.Session.SetString(Constants.UserEmail, result.Data.Email);
+                    HttpContext.Session.SetString(Constants.UserRole, result.Data.IsAdmin ? "admin" : "member");
                     return RedirectToAction(nameof(Index));
 
-                foreach (string error in result.Errors)
-                {
-                    ModelState.AddModelError(string.Empty, error);
                 }
+                else
+                {
+                    foreach (string error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error);
+                    }
+                }
+
+              
             }
 
-            return View();
+            return View(model);
         }
         public IActionResult Register()
         {
@@ -50,7 +65,7 @@ namespace WebApplication_MyNoteSampleApp.Controllers
         {
             if (ModelState.IsValid)
             {
-               ServiceResult result =  _userService.Register(model);
+               ServiceResult<object> result =  _userService.Register(model);
                 if (!result.IsError)
                     return RedirectToAction(nameof(Login));
 
@@ -78,6 +93,12 @@ namespace WebApplication_MyNoteSampleApp.Controllers
         public IActionResult Privacy()
         {
             return View();
+        }
+
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction(nameof(Index));
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
