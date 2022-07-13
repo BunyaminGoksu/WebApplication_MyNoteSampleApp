@@ -1,27 +1,33 @@
-﻿@{
-    ViewData["Title"] = "Kategori Güncelle";
+﻿@model CategoryViewModel
+@{
+	ViewData["Title"] = "Kategori Güncelle";
 }
 <div class="row mb-4">
-    <div class="col">
-        <h3 class="display-4 border-bottom">@ViewData["Title"]</h3>
-    </div>
+	<div class="col">
+		<h3 class="display-4 border-bottom">@ViewData["Title"]</h3>
+	</div>
 </div>
 <div class="row">
-    <div class="col-4">
-        	<form>
+	<div class="col-4">
+		<div class="text-danger small text-center" asp-validation-summary="ModelOnly"></div>
+
+		<form method="post">
 			<div class="form-group mb-3">
-				<label for="CategoryName" class="font-weight-bold small">Kategori Adı</label>
-				<input type="text" class="form-control" id="CategoryName" placeholder="@NameData.GetCompanyName()" value="@NameData.GetCompanyName()">
+				<label asp-for="Name" class="font-weight-bold small"></label>
+				<input asp-for="Name" class="form-control" id="CategoryName" placeholder="@NameData.GetCompanyName()">
+				<span asp-validation-for="Name" class="text-danger small"></span>
 			</div>
 			<div class="form-group mb-3">
-				<label for="CategoryDesc" class="font-weight-bold small">Kategori Açıklama</label>
-				<textarea id="CategoryDesc" cols="3" class="form-control" placeholder="@TextData.GetSentence()">@TextData.GetSentence()</textarea>
+				<label asp-for="Description" class="font-weight-bold small"></label>
+				<textarea asp-for="Description" rows="2" class="form-control" placeholder="@TextData.GetSentence()"></textarea>
+				<span asp-validation-for="Description" class="text-danger small"></span>
+
 			</div>
-			
+
 			<div>
-			<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-save"></i> Kaydet</button>
-			<a class="btn btn-secondary btn-sm" asp-action="Index"><i class="fa fa-arrow-left"></i> Listeye Dön </a>
+				<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Kaydet</button>
+				<a class="btn btn-secondary btn-sm" asp-action="Index"><i class="fa fa-arrow-left"></i> Listeye Dön </a>
 			</div>
 		</form>
-    </div>
+	</div>
 </div>

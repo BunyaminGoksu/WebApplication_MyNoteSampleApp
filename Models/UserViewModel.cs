@@ -2,8 +2,13 @@
 
 namespace WebApplication_MyNoteSampleApp.Models
 {
-    public class RegisterViewModel
+    public class UserViewModel
     {
+        
+           [StringLength(60, ErrorMessage = "{0} alanı maksimum {1} karakter olabilir"),
+            Display(Name = "Ad Soyad")]
+        public string FullName { get; set; }
+
         [Required(ErrorMessage = "{0} alanı boş geçilemez"),
             StringLength(60, ErrorMessage = "{0} alanı maksimum {1} karakter olabilir"),
             Display(Name = "Kullanıcı Adı")]
@@ -25,5 +30,12 @@ namespace WebApplication_MyNoteSampleApp.Models
             Display(Name = "Şifre(Tekrar)")
             , Compare(nameof(Password), ErrorMessage = "{0} alanı ile {1} alanı eşleşmiyor.")]
         public string RePassword { get; set; }
+
+        [Display(Name = "Aktif")]
+        public bool IsActive { get; set; }
+
+        [Display(Name = "Yönetici")]
+        public bool IsAdmin { get; set; }
     }
+
 }

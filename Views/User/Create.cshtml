@@ -1,4 +1,6 @@
-﻿@{
+﻿@model UserViewModel
+
+@{
 	ViewData["Title"] = "Kullanıcı Oluştur";
 }
 <div class="row mb-4">
@@ -8,34 +10,45 @@
 </div>
 <div class="row">
 	<div class="col-4">
-		<form>
+		<div class="text-danger small text-center" asp-validation-summary="ModelOnly"></div>
+
+		<form method="post" asp-action="Create">
 			<div class="form-group mb-3">
-				<label for="Fullname" class="font-weight-bold small">Ad Soyad</label>
-				<input type="text" class="form-control" id="Fullname" placeholder="@NameData.GetFullName()">
+				<label asp-for="FullName" class="font-weight-bold small"></label>
+				<input asp-for="FullName" class="form-control" placeholder="@NameData.GetFullName()">
+				<span asp-validation-for="FullName" class="text-danger small"></span>
+
 			</div>
 			<div class="form-group mb-3">
-				<label for="Username" class="font-weight-bold small">Kullanıcı Adı</label>
-				<input type="text" class="form-control" id="Username" placeholder="@NameData.GetTitleName()">
+				<label asp-for="Username" class="font-weight-bold small"></label>
+				<input asp-for="Username" class="form-control" placeholder="@NameData.GetTitleName()">
+				<span asp-validation-for="Username" class="text-danger small"></span>
 			</div>
 			<div class="form-group mb-3">
-				<label for="Email" class="font-weight-bold small">E-posta Adresi</label>
-				<input type="email" class="form-control" id="Email" placeholder="@NetworkData.GetEmail()">
+				<label asp-for="Email" class="font-weight-bold small"></label>
+				<input asp-for="Email" class="form-control" placeholder="@NetworkData.GetEmail()">
+				<span asp-validation-for="Email" class="text-danger small"></span>
+
 			</div>
 			<div class="form-group mb-3">
-				<label for="Password" class="font-weight-bold small">Şifre</label>
-				<input type="password" class="form-control" id="Password" placeholder="@TextData.GetNumeric(6)">
+				<label asp-for="Password" class="font-weight-bold small"></label>
+				<input asp-for="Password" type="password" class="form-control" placeholder="@TextData.GetNumeric(6)">
+				<span asp-validation-for="Password" class="text-danger small"></span>
+
 			</div>
 			<div class="form-group mb-3">
-				<label for="RePassword" class="font-weight-bold small">Şifre(Tekrar)</label>
-				<input type="password" class="form-control" id="RePassword" placeholder="@TextData.GetNumeric(6)">
+				<label asp-for="RePassword" class="font-weight-bold small"></label>
+				<input asp-for="RePassword" type="password" class="form-control" placeholder="@TextData.GetNumeric(6)">
+				<span asp-validation-for="Password" class="text-danger small"></span>
+
 			</div>
 			<div class="form-group form-check">
-				<input type="checkbox" class="form-check-input" id="isactive" />
-				<label class="form-check-label" for="isactive">Aktif</label>
+				<input class="form-check-input" asp-for="IsActive" />
+				<label class="form-check-label" asp-for="IsActive"></label>
 			</div>
 			<div class="form-group form-check">
-				<input type="checkbox" class="form-check-input" id="isAdmin" />
-				<label class="form-check-label" for="isAdmin">Yönetici</label>
+				<input class="form-check-input" asp-for="IsAdmin" />
+				<label class="form-check-label" asp-for="IsAdmin"></label>
 			</div>
 
 
