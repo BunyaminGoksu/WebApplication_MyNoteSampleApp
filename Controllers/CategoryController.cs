@@ -82,14 +82,45 @@ namespace WebApplication_MyNoteSampleApp.Controllers
 
             return View(model);
         }
-        public IActionResult Delete()
+        public IActionResult Delete(int id)
         {
-            return View();
+            var result = _categoryService.Find(id);
+
+            if (result.Data == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(result.Data);
 
         }
-        public IActionResult Details()
+        [HttpPost]
+        [ActionName("Delete")]
+        public IActionResult DeleteConfirm(int id)
         {
-            return View();
+
+            ServiceResult<object> result = _categoryService.Remove(id);
+            if (!result.IsError)
+                return RedirectToAction(nameof(Index));
+
+            foreach (string error in result.Errors)
+            {
+                ModelState.AddModelError(string.Empty, error);
+            }
+
+            return View(_categoryService.Find(id).Data);
+        }
+
+        public IActionResult Details(int id)
+        {
+            var result = _categoryService.Find(id);
+
+            if(result.Data == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(result.Data);
 
         }
     }

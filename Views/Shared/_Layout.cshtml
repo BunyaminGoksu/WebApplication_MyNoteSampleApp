@@ -37,7 +37,7 @@
 								<ul class="dropdown-menu" aria-labelledby="manage">
 									<li><a class="dropdown-item text-dark" asp-action="Create" asp-controller="Note"><i class="fa fa-plus"></i>  Yazı Ekle</a></li>
 									<li><hr class="dropdown-divider"></li>
-									<li><a class="dropdown-item" asp-action="NoteList" asp-controller="Index"><i class="fa fa-th-list"></i> Yazılarım</a></li>
+									<li><a class="dropdown-item" asp-action="Index" asp-controller="Note"><i class="fa fa-th-list"></i> Yazılarım</a></li>
 									<li><a class="dropdown-item" asp-action="LikedList" asp-controller="Note"><i class="fa fa-star"></i> Beğendiklerim</a></li>
 
 
@@ -54,6 +54,14 @@
 								</ul>
 							</li>
 						}
+						
+						
+						@{
+							WebApplication_MyNoteSampleApp.Business.CategoryService categoryService = new WebApplication_MyNoteSampleApp.Business.CategoryService();
+
+							WebApplication_MyNoteSampleApp.Business.ServiceResult<List<Category>> result = categoryService.List();
+
+						}
 						<li class="nav-item dropdown">
 							<a class="nav-link dropdown-toggle text-dark" href="#" id="categories" role="button" data-bs-toggle="dropdown" aria-expanded="false">
 								<i class="fa fa-th-list"></i> Kategoriler
@@ -63,9 +71,13 @@
 
 								<li><hr class="dropdown-divider"></li>
 
-								<li><a class="dropdown-item" asp-action="Index" asp-controller="Home" asp-route-id="1"><i class="fa fa-th-list"></i> Category 1</a></li>
+								@foreach (Category category in result.Data)
+								{
+								<li><a class="dropdown-item" asp-action="Index" asp-controller="Home" asp-route-categoryId="@category.Id"><i class="fa fa-th-list"></i> @category.Name</a></li>
+									
+								}
 
-								<li><a class="dropdown-item" asp-action="Index" asp-controller="Home" asp-route-id="2"><i class="fa fa-th-list"></i> Category 2</a></li>
+
 							</ul>
 						</li>
 						<li class="nav-item">

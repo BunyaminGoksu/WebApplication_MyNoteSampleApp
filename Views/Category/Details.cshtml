@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Category
+
+@{
 	ViewData["Title"] = "Kategori Detay";
 }
 <div class="row mb-4">
@@ -10,30 +12,30 @@
 <div class="row">
 	<div class="col-4">
 		<dl class="row">
-			<dt class="col-4">Kategori Adı</dt>
-			<dd class="col-8">@NameData.GetCompanyName()</dd>
+			<dt class="col-4">@Html.DisplayNameFor(m=>m.Name)</dt>
+			<dd class="col-8">@Model.Name</dd>
 
-			<dt class="col-4">Kategori Açıklama</dt>
-			<dd class="col-8">@TextData.GetSentence()</dd>
+			<dt class="col-4">@Html.DisplayNameFor(m=>m.Description)</dt>
+			<dd class="col-8">@Model.Description</dd>
 
-			<dt class="col-4">Oluşturan</dt>
-			<dd class="col-8">@NameData.GetFullName()</dd>
+			<dt class="col-4">@Html.DisplayNameFor(m => m.CreatedUser)</dt>
+			<dd class="col-8">@Model.CreatedUser</dd>
 
-			<dt class="col-4">Oluşturma Tarihi</dt>
-			<dd class="col-8">@DateTimeData.GetDatetime()</dd>
+			<dt class="col-4">@Html.DisplayNameFor(m => m.CreatedAt)</dt>
+			<dd class="col-8">@Model.CreatedAt</dd>
 
-			<dt class="col-4">Güncelleyen</dt>
-			<dd class="col-8">@NameData.GetFullName()</dd>
+			<dt class="col-4">@Html.DisplayNameFor(m => m.ModifiedUser)</dt>
+			<dd class="col-8">@Model.ModifiedUser</dd>
 
-			<dt class="col-4">Güncelleme Tarihi</dt>
-			<dd class="col-8">@DateTimeData.GetDatetime()</dd>
+			<dt class="col-4">@Html.DisplayNameFor(m => m.ModifiedAt)</dt>
+			<dd class="col-8">@Model.ModifiedAt</dd>
 		</dl>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col">
-		<a  class="btn btn-warning btn-sm" asp-action="Edit"><i class="fa fa-edit"></i> Düzenle</a>
+		<a  class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@Model.Id"><i class="fa fa-edit"></i> Düzenle</a>
 		<a class="btn btn-secondary btn-sm" asp-action="Index"><i class="fa fa-arrow-left"></i> Listeye Dön </a>
 	</div>
 </div> 

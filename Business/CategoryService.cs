@@ -115,5 +115,25 @@ namespace WebApplication_MyNoteSampleApp.Business
 
         }
 
+        public ServiceResult<object> Remove(int id)
+        {
+            ServiceResult<object> result = new ServiceResult<object>();
+
+            Category category = _db.Categories.Find(id);
+
+            if (category != null)
+            {
+                _db.Categories.Remove(category);
+
+                if (_db.SaveChanges() == 0)
+                {
+                    result.AddError("Silme işlemi yapılamadı.");
+                }
+
+            }
+            return result;
+        }
+
+
     }
 }

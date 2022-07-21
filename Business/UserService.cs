@@ -142,7 +142,7 @@ namespace WebApplication_MyNoteSampleApp.Business
 
         }
 
-        internal ServiceResult<object> Remove(int id)
+        public ServiceResult<object> Remove(int id)
         {
             ServiceResult<object> result = new ServiceResult<object>();
 

@@ -1,4 +1,7 @@
-﻿@{
+﻿@model IEnumerable<Note>
+
+
+@{
 	ViewData["Title"] = "Beğendiklerim";
 }
 
@@ -14,29 +17,37 @@
 		<table class="table table-hover table-striped table-sm small">
 			<thead>
 				<tr>
-					<th>Kategori</th>
-					<th>Başlık</th>
+					<th>@Html.DisplayNameFor(m=>m.Category.Name)</th>
+					<th>@Html.DisplayNameFor(m=>m.Title)</th>
 					<th class="text-center">Beğeni Adet</th>
 					<th class="text-center">Yorum Adet</th>					
 					<th></th>
 				</tr>
 			</thead>
 			<tbody>
-				@for (int i = 0; i < 10; i++)
+			@if (Model == null || Model.Count() == 0)
 				{
 					<tr>
-						<td>@NameData.GetCompanyName()</td>
-						<td>@TextData.GetSentence()</td>
-						<td class="text-center">@NumberData.GetNumber(1,100)</td>
-						<td class="text-center">@NumberData.GetNumber(1,100)</td>
-						
-						<td class="text-center">
+						<td colspan="7" class="text-center">
+							<div>Herhangi bir veri bulunamadı.</div>
+						</td>
+					</tr>
+				}
+				else
+				{
+					@foreach (Note note in Model)
+					{
+						<tr>
+							<td>@note.Category.Name</td>
+							<td>@note.Title</td>
+							<td class="text-center">@note.Likes.Count</td>
+							<td class="text-center">@note.Comments.Count</td>		
+							<td class="text-center">
 							<button class="btn btn-success btn-sm" data-toggle="modal" data-target="#modal_notecomments"><i class="fa fa-comments"></i></button>
 							<button data-toggle="modal" data-target="#modal_notedetail" class="btn btn-secondary btn-sm"><i class="fa fa-info-circle"></i></button>
 						</td>
-
-					</tr>
-
+						</tr>
+					}
 				}
 			</tbody>
 		</table>

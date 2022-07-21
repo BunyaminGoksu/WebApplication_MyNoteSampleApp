@@ -1,4 +1,6 @@
-﻿@{
+﻿@model NoteViewModel
+
+@{
     ViewData["Title"] = "Yazı Güncelle";
 }
 <div class="row mb-4">
@@ -8,30 +10,31 @@
 </div>
 <div class="row"> 
     <div class="col-4">
-        	<form>
+				<div class="text-danger small text-center" asp-validation-summary="ModelOnly"></div>
+        	<form method="post">
 			<div class="form-group mb-3">
-				<label for="CategoryName" class="font-weight-bold small">Kategori</label>
-				<select id="Category" class="form-control">
+				<label asp-for="CategoryId" class="font-weight-bold small">Kategori</label>
+				<select asp-for="CategoryId" id="Category" class="form-control" 
+				asp-items="@((List<SelectListItem>)ViewData["categories"])">
 					<option selected>Seçiniz</option>
-					<option selected>Kategori 1</option>
-					<option selected>Kategori 2</option>
+					
 				</select>
 			</div>
 			<div class="form-group mb-3">
-				<label for="Title" class="font-weight-bold small">Başlık</label>
-				<input type="text" class="form-control" id="Title" placeholder="@TextData.GetSentence()">
+				<label asp-for="Title" class="font-weight-bold small"></label>
+				<input asp-for="Title" class="form-control" placeholder="@TextData.GetSentence()">
 			</div>
 			<div class="form-group mb-3">
-				<label for="Summary" class="font-weight-bold small">Özet</label>
-				<textarea id="Summary" cols="2" class="form-control" placeholder="@TextData.GetSentences(2)"></textarea>
+				<label asp-for="Summary" class="font-weight-bold small"></label>
+				<textarea asp-for="Summary" cols="2" class="form-control" placeholder="@TextData.GetSentences(2)"></textarea>
 			</div>
 			<div class="form-group mb-3">
-				<label for="Detail" class="font-weight-bold small">Detay</label>
-				<textarea id="Detail" rows="6" class="form-control" placeholder="@TextData.GetSentences(6)"></textarea>
+				<label asp-for="Detail" class="font-weight-bold small"></label>
+				<textarea asp-for="Detail" rows="6" class="form-control" placeholder="@TextData.GetSentences(6)"></textarea>
 			</div>
 			<div class="form-group form-check">
-				<input type="checkbox" class="form-check-input" id="isdraft" />
-				<label class="form-check-label" for="isdraft">Taslak </label>
+				<input asp-for="IsDraft" class="form-check-input" />
+				<label class="form-check-label" asp-for="IsDraft"> </label>
 			</div>
 			
 			<div>

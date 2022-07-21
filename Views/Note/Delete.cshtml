@@ -1,4 +1,6 @@
-﻿@{
+﻿@model Note
+
+@{
     ViewData["Title"] = "Yazı Sil";
 }
 <div class="row mb-4">
@@ -19,41 +21,47 @@
 <div class="row">
 	<div class="col-4">
 		<dl class="row">
-			<dt class="col-4">Kategori</dt>
-			<dd class="col-8">@NameData.GetCompanyName()</dd>
+		<dt class="col-4">@Html.DisplayNameFor(m => m.Category.Name)</dt>
+			<dd class="col-8">@Model.Category.Name</dd>
 
-			<dt class="col-4">Başlık</dt>
-			<dd class="col-8">@TextData.GetSentence()</dd>
+			<dt class="col-4">@Html.DisplayNameFor(m => m.Title)</dt>
+			<dd class="col-8">@Model.Title</dd>
 
-			<dt class="col-4">Özet</dt>
-			<dd class="col-8">@TextData.GetSentences(2)</dd>
+			<dt class="col-4">@Html.DisplayNameFor(m => m.Summary)</dt>
+			<dd class="col-8">@Model.Summary</dd>
 
-			<dt class="col-4">Taslak</dt>
+			<dt class="col-4">@Html.DisplayNameFor(m => m.IsDraft)</dt>
 			<dd class="col-8">
-				<i class="fa fa-@(BooleanData.GetBoolean() ? "check text-success" : "times text-danger")"></i>
+				<i class="fa fa-@(Model.IsDraft ? "check text-success" : "times text-danger")"></i>
 			</dd>
 
 			<dt class="col-4">Beğeni Adedi</dt>
-			<dd class="col-8">@NumberData.GetNumber(1,100)</dd>
+			<dd class="col-8">@Model.Likes.Count</dd>
 
 			<dt class="col-4">Yorum Adedi</dt>
-			<dd class="col-8">@NumberData.GetNumber(1,100)</dd>
+			<dd class="col-8">@Model.Comments.Count</dd>
+	
+			<dt class="col-4">@Html.DisplayNameFor(m => m.CreatedUser)</dt>
+			<dd class="col-8">@Model.CreatedUser</dd>
 
-			<dt class="col-4">Oluşturan</dt>
-			<dd class="col-8">@NameData.GetFullName()</dd>
+			<dt class="col-4">@Html.DisplayNameFor(m => m.CreatedAt)</dt>
+			<dd class="col-8">@Model.CreatedAt</dd>
 
-			<dt class="col-4">Oluşturma Tarihi</dt>
-			<dd class="col-8">@DateTimeData.GetDatetime()</dd>
+			<dt class="col-4">@Html.DisplayNameFor(m => m.ModifiedUser)</dt>
+			<dd class="col-8">@Model.ModifiedUser</dd>
 
-			<dt class="col-4">Güncelleyen</dt>
-			<dd class="col-8">@NameData.GetFullName()</dd>
+			<dt class="col-4">@Html.DisplayNameFor(m => m.ModifiedAt)</dt>
+			<dd class="col-8">@Model.ModifiedAt</dd>
+		
+			<dt class="col-4">@Html.DisplayNameFor(m => m.Detail)</dt>
+			<dd class="col-8">@Model.Detail</dd>
 		</dl>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col">
-		<form method="post" asp-action="Delete">
+		<form method="post">
 			<button type="submit"  class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Yazı Sil</button>
 		<a class="btn btn-secondary btn-sm" asp-action="Index"><i class="fa fa-arrow-left"></i> Listeye Dön </a>
 		</form>

@@ -2,7 +2,7 @@
 
 namespace WebApplication_MyNoteSampleApp.Models
 {
-    public class UserViewModel
+	public class UserViewModel
     {
         
            [StringLength(60, ErrorMessage = "{0} alanı maksimum {1} karakter olabilir"),
