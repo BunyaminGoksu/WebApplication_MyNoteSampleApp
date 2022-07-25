@@ -119,7 +119,6 @@ namespace WebApplication_MyNoteSampleApp.Controllers
         {
             var result = _noteService.Find(id);
 
-            Thread.Sleep(3000);
 
             if(result.Data == null)
                 return NotFound(); //StatusCode : 404
@@ -127,6 +126,20 @@ namespace WebApplication_MyNoteSampleApp.Controllers
 
 
             return PartialView("_NoteDetailPartial",result.Data);
+        }
+
+
+        public IActionResult GetNoteComment(int id)
+        {
+            var result = _noteService.Find(id);
+
+
+            if (result.Data == null)
+                return NotFound(); //StatusCode : 404
+
+
+
+            return PartialView("_NoteCommentsPartial", result.Data);
         }
 
     }

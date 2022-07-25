@@ -1,0 +1,42 @@
+﻿@model Note
+@{
+	int userId = ViewContext.HttpContext.Session.GetInt32(Constants.UserId).GetValueOrDefault();
+	bool isLogin = (userId == 0) ? false : true;
+}
+
+@if (@Model.Comments != null && Model.Comments.Count > 0)
+{
+	@foreach (Comment comment in Model.Comments)
+	{
+		<div class="media">
+			<img src="https://picsum.photos/id/1005/64" class="mr-3" alt= ="@comment.User.Username" />
+			<div class="media-body">
+				<h5 class="mt-0">@comment.User.Username</h5>
+				<p>
+					@comment.Text
+				</p>
+				<div class="small text-end text-muted"><i class="fa fa-clock"></i> @(comment.ModifiedAt != null ? comment.ModifiedAt : comment.CreatedAt) </div>
+			</div>
+		</div>
+	}
+}
+else
+{
+	<div class="text-center">Henüz bu yazıya bir yorum yapılmadı..</div>
+}
+@if (isLogin)
+{
+	<div class="media mt-4">
+		<div class="media-body">
+			<form method="post">
+				<div class="input-group">
+					<textarea id="txtCommentText" rows="2" class="form-control" placeholder="Yorumunuz"></textarea>
+					<button class="btn btn-primary" type="button" onclick="sendComment(@Model.Id)"><i class="fa fa-send "></i> Gönder</button>
+				</div>
+
+			</form>
+		</div>
+	</div>
+}
+
+

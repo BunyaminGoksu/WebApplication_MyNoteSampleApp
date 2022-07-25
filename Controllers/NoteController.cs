@@ -174,5 +174,16 @@ namespace WebApplication_MyNoteSampleApp.Controllers
             return View(result.Data);
 
         }
+
+        [HttpPost]
+        public IActionResult AddCommentToNote(int id,string text)
+        {
+
+            ServiceResult<Note> result = _noteService.AddComment(id, text, HttpContext);
+
+
+            return Json(new {hasError = result.IsError});
+
+        }
     }
 }

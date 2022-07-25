@@ -204,5 +204,33 @@ namespace WebApplication_MyNoteSampleApp.Business
             }
             return result;
         }
+
+
+        public ServiceResult<Note> AddComment(int id, string commentText, HttpContext httpContext)
+        {
+            var result = new ServiceResult<Note>();
+
+            _db.Comments.Add(new Comment
+            {
+                NoteId = id,
+                UserId = httpContext.Session.GetInt32(Constants.UserId),
+                Text = commentText,
+                CreatedAt = DateTime.Now,
+                CreatedUser = httpContext.Session.GetString(Constants.UserName)
+
+            });
+
+            if (_db.SaveChanges() == 0)
+            {
+                result.AddError("Yorum eklenemedi.");
+            }
+            else
+            {
+                result.Data = Find(id).Data;
+
+            }
+
+            return result;
+        }
     }
 }
