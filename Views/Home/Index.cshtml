@@ -1,4 +1,12 @@
-﻿@{
+﻿@model IEnumerable<Note>
+
+@{
+	WebApplication_MyNoteSampleApp.Business.CategoryService categoryService = new WebApplication_MyNoteSampleApp.Business.CategoryService();
+
+	WebApplication_MyNoteSampleApp.Business.ServiceResult<List<Category>> result = categoryService.List();
+
+}
+@{
 	ViewData["Title"] = "Home Page";
 }
 
@@ -44,30 +52,34 @@
 </div>
 }
 
-<div class="row">
+<div class="row mt-2 mb-2">
 	<div class="col-10 offset-1 my-1">
 		<a class="badge badge-secondary  bg-dark  text-decoration-none" asp-action="Index" asp-controller="Home"><i class="fa fa-th-list mr-2"></i> Tümü</a>
-		<a class="badge badge-secondary  bg-secondary  text-decoration-none" asp-action="Index" asp-controller="Home" asp-route-id="1"><i class="fa fa-th-list mr-2"></i> aaa</a>
-		<a class="badge badge-secondary  bg-secondary  text-decoration-none" asp-action="Index" asp-controller="Home" asp-route-id="2"><i class="fa fa-th-list mr-2"></i> aaa</a>
-		<a class="badge badge-secondary  bg-secondary  text-decoration-none" asp-action="Index" asp-controller="Home" asp-route-id="3"><i class="fa fa-th-list mr-2"></i> aaa</a>
-		<a class="badge badge-secondary  bg-secondary  text-decoration-none" asp-action="Index" asp-controller="Home" asp-route-id="4"><i class="fa fa-th-list mr-2"></i> aaa</a>
-	</div>
+		@foreach (Category category in result.Data)
+		{
+			<a class="badge badge-secondary  bg-secondary  text-decoration-none" asp-action="Index" asp-controller="Home" asp-route-id="@category.Id">
+				<i class="fa fa-th-list mr-2"></i> @category.Name
+			</a>
+		}
 
+
+	</div>
 </div>
+
 <div class="row row-cols-1 row-cols-sm-2 row-cols-md-4 mb-5">
-	@for (int i = 0; i < 10; i++)
+	@foreach (Note note in Model)
 	{
 		<div class="col mb-4">
 
 			<div class="card ">
-				<img src="https://picsum.photos/320/150?random=@i" class="card-img-top" alt="...">
+				<img src="https://picsum.photos/320/150?random=@note.Id" class="card-img-top" alt="@note.Summary">
 				<div class="card-body">
-					<h5 class="card-title"><a href="">Card title</a> </h5>
-					<p class="card-text">Some quick example text to build on the card title and make up the bulk...</p>
+					<h5 class="card-title"><a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#modal_notedetail" onclick="loadNoteDetail(@note.Id)">@note.Title</a> </h5>
+					<p class="card-text">@note.Summary</p>
 					<p class="card-text">
 						<div class="text-muted small">
-							<div class="text-end"><i class="fa fa-user"></i> Bünyamingöksu</div>
-							<div class="text-end"><i class="fa fa-clock"></i> 19.06.2022 01.25</div>
+							<div class="text-end"><i class="fa fa-user"></i> @(note.ModifiedUser != null ? note.ModifiedUser : note.CreatedUser)</div>
+							<div class="text-end"><i class="fa fa-clock"></i> @(note.ModifiedAt != null ? note.ModifiedAt : note.CreatedAt)</div>
 						</div>
 
 					</p>
@@ -75,19 +87,27 @@
 				<div class="card-footer">
 					<div class="row">
 						<div class="col">
-							<a href="#" class="btn btn-default btn-sm"><i class="far fa-star ml-2"></i> 5</a>
-							<button data-toggle="modal" data-target="#modal_notecomments" class="btn btn-default btn-sm"><i class="far fa-comments ml-2"></i> 15</button>
-
+							<a href="#" class="btn btn-default btn-sm"><i class="far fa-star ml-2"></i> @note.Likes.Count</a>
+							<button data-bs-toggle="modal" data-bs-target="#modal_notecomments" class="btn btn-default btn-sm">
+								<i class="far fa-comments ml-2"></i> @note.Comments.Count
+							</button>
 						</div>
 						<div class="col text-end">
-							<button data-toggle="modal" data-target="#modal_notedetail" class="btn btn-light btn-sm">Detay <i class="fa fa-info-circle ml-2"></i></button>
+							<button data-bs-toggle="modal" data-bs-target="#modal_notedetail" onclick="loadNoteDetail(@note.Id)" class="btn btn-light btn-sm">
+								Detay <i class="fa fa-info-circle ml-2"></i>
+							</button>
 						</div>
 					</div>
 				</div>
 			</div>
-
 		</div>
 	}
+</div>
+
+<div class="template d-none">
+	<div class="loading">
+			<div class="text-center"><i class="fa fa-sync-alt fa-spin"></i> yükleniyor..</div>
+	</div>
 </div>
 
 <!-- Modal -->
@@ -99,20 +119,9 @@
 				<button type="button" class="close" data-bs-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
 			</div>
 			<div class="modal-body">
-				<p>
-					Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-					when an unknown printer took a galley of type and scrambled it to make a type specimen book.
-				</p>
-				<p>
-					<div class="text-muted small">
-						<div class="text-end"><i class="fa fa-user"></i> Bünyamingöksu</div>
-						<div class="text-end"><i class="fa fa-clock"></i> 19.06.2022 01.25</div>
-					</div>
-
-				</p>
 			</div>
 			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal"><i class="fa fa-times"></i> Kapat</button>
+				<button type="button" class="btn btn-secondary btn-sm" data-bs-dismiss="modal"><i class="fa fa-times"></i> Kapat</button>
 			</div>
 		</div>
 	</div>

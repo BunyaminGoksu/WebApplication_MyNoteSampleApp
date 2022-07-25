@@ -12,16 +12,24 @@ namespace WebApplication_MyNoteSampleApp.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly UserService _userService;
+        private readonly NoteService _noteService;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
             _userService = new UserService();
+            _noteService = new NoteService();
         }
 
-        public IActionResult Index()
+        public IActionResult Index(int? categoryId,string mode)
         {
-            return View();
+            if(categoryId == null && string.IsNullOrEmpty(mode))            
+                return View(_noteService.List(null).Data);           
+            else          
+                return View(_noteService.List(categoryId, mode).Data);
+
+            
+
         }
         public IActionResult Login()
         {
@@ -106,5 +114,21 @@ namespace WebApplication_MyNoteSampleApp.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult GetNoteDetail(int id)
+        {
+            var result = _noteService.Find(id);
+
+            Thread.Sleep(3000);
+
+            if(result.Data == null)
+                return NotFound(); //StatusCode : 404
+            
+
+
+            return PartialView("_NoteDetailPartial",result.Data);
+        }
+
     }
+
 }

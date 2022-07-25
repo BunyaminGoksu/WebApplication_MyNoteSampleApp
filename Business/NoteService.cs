@@ -41,6 +41,48 @@ namespace WebApplication_MyNoteSampleApp.Business
             return result;
         }
 
+        public ServiceResult<List<Note>> List(int? categoryId, string mode)
+        {
+            IQueryable<Note> notes;
+
+            notes = _db.Notes
+          .Include(n => n.Likes)
+          .Include(n => n.Comments)
+          .Include(n => n.Category)
+          .Include(n => n.Owner)
+          .AsQueryable();
+
+            if (categoryId != null)
+            {
+                notes = notes.Where(n => n.CategoryId == categoryId);
+            }
+            List<Note> noteList = notes.AsNoTracking().ToList();
+            noteList.ForEach(n => n.ModifiedAt = (n.ModifiedAt == null ? n.CreatedAt : n.ModifiedAt));
+
+            if (string.IsNullOrEmpty(mode))
+            {
+                switch (mode)
+                {
+                    case "last":
+                        noteList = noteList.OrderByDescending(n => n.ModifiedAt).ToList();
+                        break;
+
+                    case "mostliked":
+                        noteList = noteList.OrderByDescending(n => n.Likes.Count).ToList();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
+
+            ServiceResult<List<Note>> result = new ServiceResult<List<Note>>();
+
+            result.Data = noteList;
+
+            return result;
+        }
+
         public ServiceResult<List<Note>> List(int? userId)
         {
             IQueryable<Note> notes;
@@ -49,6 +91,7 @@ namespace WebApplication_MyNoteSampleApp.Business
           .Include(n => n.Likes)
           .Include(n => n.Comments)
           .Include(n => n.Category)
+          .Include(n => n.Owner)
           .AsQueryable();
 
 
@@ -78,10 +121,12 @@ namespace WebApplication_MyNoteSampleApp.Business
                  .Include(n => n.Likes)
                  .Include(n => n.Comments)
                  .Include(n => n.Category)
-                 .AsQueryable();
-        
+                 .Include(n => n.Owner)
 
-            
+                 .AsQueryable();
+
+
+
             ServiceResult<List<Note>> result = new ServiceResult<List<Note>>();
 
             result.Data = notes.ToList();
@@ -99,6 +144,7 @@ namespace WebApplication_MyNoteSampleApp.Business
                 .Include(n => n.Likes)
                 .Include(n => n.Comments)
                 .Include(n => n.Category)
+                .Include(n => n.Owner)
                 .SingleOrDefault(n => n.Id == id)
             };
 
