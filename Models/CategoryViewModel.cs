@@ -2,7 +2,7 @@
 
 namespace WebApplication_MyNoteSampleApp.Models
 {
-    public class CategoryViewModel
+	public class CategoryViewModel
     {
         [Required(ErrorMessage = "{0} alanı boş geçilemez"),
          StringLength(40, ErrorMessage = "{0} alanı maksimum {1} karakter olabilir"),

@@ -12,19 +12,27 @@
 			<img src="https://picsum.photos/id/1005/64" class="mr-3" alt= ="@comment.User.Username" />
 			<div class="media-body">
 				<h5 class="mt-0">@comment.User.Username</h5>
-				<p>
+				<p class="comment-text">
 					@comment.Text
 				</p>
 				<div class="small text-end text-muted">
 
-					@if(comment.UserId== userId ){
-									
-		   <span>
-			   <a href="javascript:void(0)" class="text-secondary text-decoration-none"><i class="fa fa-edit"></i> Düzenle</a>	 |  <a href="javascript:void(0)"  class="text-secondary text-decoration-none"><i class="fa fa-trash"></i> Sil</a> |</span>
+					@if (comment.UserId == userId)
+					{
+
+						<span>
+							<span class="edit-buttons d-none">
+								<a href="javascript:void(0)" class="text-success text-decoration-none" onclick="updateComment(this,@comment.Id,@Model.Id)"><i class="fa fa-save"></i> kaydet</a>	 |
+								<a href="javascript:void(0)" class="text-danger text-decoration-none" onclick="cancelEditComment(this,@Model.Id)"><i class="fa fa-times"></i> Vazgeç</a>	 
+							</span>
+							<a href="javascript:void(0)" class="text-info text-decoration-none edit-button" onclick="editComment(this)"><i class="fa fa-edit"></i> Düzenle</a>	 |
+							<a href="javascript:void(0)" class="text-danger text-decoration-none" onclick="removeComment(@comment.Id,@Model.Id)"><i class="fa fa-trash"></i> Sil</a> |
+						</span>
 
 					}
-		
-			   <i class="fa fa-clock"></i> @(comment.ModifiedAt != null ? comment.ModifiedAt : comment.CreatedAt) </div>
+
+					<i class="fa fa-clock"></i> @(comment.ModifiedAt != null ? comment.ModifiedAt : comment.CreatedAt)
+				</div>
 			</div>
 		</div>
 	}

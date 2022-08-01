@@ -5,6 +5,11 @@
 
 	WebApplication_MyNoteSampleApp.Business.ServiceResult<List<Category>> result = categoryService.List();
 
+	List<int> likedNoteIds = ViewData["likedNoteIds"] as List<int>;
+	int userId = ViewContext.HttpContext.Session.GetInt32(Constants.UserId).GetValueOrDefault();
+
+	bool isLogin = (userId == 0) ? false : true;
+
 }
 @{
 	ViewData["Title"] = "Home Page";
@@ -87,7 +92,8 @@
 				<div class="card-footer">
 					<div class="row">
 						<div class="col">
-							<a href="#" class="btn btn-default btn-sm"><i class="far fa-star ml-2"></i> @note.Likes.Count</a>
+
+							<a href="@(isLogin ? "javascript:void(0)" : Url.Action("Login")) " class="btn btn-default btn-sm" @(isLogin ? $"onclick=likeNote(this,{note.Id})" :"" )><i class="@((isLogin && likedNoteIds.Contains(note.Id)) ? "fas fa-star" : "far fa-star")  ml-2"></i><span> @note.Likes.Count</span></a>
 							<button data-bs-toggle="modal" data-bs-target="#modal_notecomments" class="btn btn-default btn-sm" onclick="loadNoteComments(@note.Id)">
 								<i class="far fa-comments ml-2"></i> @note.Comments.Count
 							</button>

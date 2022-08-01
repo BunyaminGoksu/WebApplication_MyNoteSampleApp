@@ -13,20 +13,31 @@ namespace WebApplication_MyNoteSampleApp.Controllers
         private readonly ILogger<HomeController> _logger;
         private readonly UserService _userService;
         private readonly NoteService _noteService;
+        private readonly EBulletinService _eBulletinService;
 
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
             _userService = new UserService();
             _noteService = new NoteService();
+            _eBulletinService = new EBulletinService();
         }
 
         public IActionResult Index(int? categoryId,string mode)
         {
-            if(categoryId == null && string.IsNullOrEmpty(mode))            
-                return View(_noteService.List(null).Data);           
+
+           int userId =  HttpContext.Session.GetInt32(Constants.UserId).GetValueOrDefault();
+
+            if(userId > 0)
+            {
+               var likedNoteIds= _noteService.GetUserLikedNoteIds(userId).Data;
+                ViewData["likedNoteIds"] = likedNoteIds;
+            }
+
+            if (categoryId == null && string.IsNullOrEmpty(mode))            
+                return View(_noteService.List(null,false).Data);           
             else          
-                return View(_noteService.List(categoryId, mode).Data);
+                return View(_noteService.List(categoryId, mode,false).Data);
 
             
 
@@ -138,9 +149,19 @@ namespace WebApplication_MyNoteSampleApp.Controllers
                 return NotFound(); //StatusCode : 404
 
 
+            result.Data.Comments.ForEach(c => c.ModifiedAt = c.ModifiedAt != null ? c.ModifiedAt : c.CreatedAt);
+            result.Data.Comments = result.Data.Comments.OrderBy(c => c.ModifiedAt).ToList();
 
             return PartialView("_NoteCommentsPartial", result.Data);
         }
+
+        [HttpPost]
+        public IActionResult SaveEBulletinEmail(string eBulletinEmail)
+        {
+            ServiceResult<object> result = _eBulletinService.Create(eBulletinEmail);
+            return RedirectToAction(nameof(Index));
+        }
+
 
     }
 

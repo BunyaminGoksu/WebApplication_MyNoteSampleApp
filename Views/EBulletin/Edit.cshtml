@@ -1,0 +1,32 @@
+﻿@model EBulletinEditViewModel
+@{
+	ViewData["Title"] = "E-Bğlten E-Posta Güncelle";
+}
+<div class="row mb-4">
+	<div class="col">
+		<h3 class="display-4 border-bottom">@ViewData["Title"]</h3>
+	</div>
+</div>
+<div class="row">
+	<div class="col-4">
+		<div class="text-danger small text-center" asp-validation-summary="ModelOnly"></div>
+
+		<form method="post">
+			<div class="form-group mb-3">
+				<label asp-for="Email" class="font-weight-bold small"></label>
+				<input asp-for="Email" class="form-control" id="CategoryName" placeholder="@NetworkData.GetEmail()">
+				<span asp-validation-for="Email" class="text-danger small"></span>
+			</div>
+				<div class="form-group form-check">
+				<input asp-for="Banned" class="form-check-input" />
+				<label class="form-check-label" asp-for="Banned"> </label>
+			</div>
+			
+				
+			<div>
+				<button type="submit" class="btn btn-primary btn-sm"><i class="fa fa-plus"></i> Kaydet</button>
+				<a class="btn btn-secondary btn-sm" asp-action="Index"><i class="fa fa-arrow-left"></i> Listeye Dön </a>
+			</div>
+		</form>
+	</div>
+</div> 

@@ -1,0 +1,46 @@
+﻿@model EBulletin
+@{
+	ViewData["Title"] = "E-Bülten E-Posta Adresi Sil";
+}
+<div class="row mb-4">
+	<div class="col">
+		<h3 class="display-4 border-bottom">@ViewData["Title"]</h3>
+	</div>
+</div>
+
+<div class="row mb-4">
+	<div class="col">
+		<p class="text-danger">
+			İlgili E-Posta adresini silmek istediğinize emin misiniz?<br />
+			<small>Bu işlem geri alınamaz ve kategoriye ait yazılarında silinmesini gerektirir!</small>
+		</p>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-4">
+		<dl class="row">
+			<dt class="col-4">@Html.DisplayNameFor(m=>m.Email)</dt>
+			<dd class="col-8">@Model.Email</dd>
+
+			<dt class="col-4">@Html.DisplayNameFor(m => m.Banned)</dt>
+			<dd class="col-8">
+				<i class="fa fa-@(Model.Banned ? "check text-success" : "times text-danger")"></i>
+			</dd>
+
+			<dt class="col-4">@Html.DisplayNameFor(m => m.CreatedAt)</dt>
+			<dd class="col-8">@Model.CreatedAt</dd>
+
+			
+	</div>
+</div>
+
+<div class="row">
+	<div class="col">
+		<form method="post">
+			<button type="submit" class="btn btn-danger btn-sm"><i class="fa fa-trash"></i> Sil</button>
+			<a class="btn btn-secondary btn-sm" asp-action="Index"><i class="fa fa-arrow-left"></i> Listeye Dön </a>
+		</form>
+
+	</div>
+</div> 

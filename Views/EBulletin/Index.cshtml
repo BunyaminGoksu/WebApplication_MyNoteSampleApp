@@ -1,0 +1,54 @@
+﻿@model IEnumerable<EBulletin>
+@{
+	ViewData["Title"] = "E-Bülten Posta Adresleri";
+}
+
+<div class="row mb-4">
+	<div class="col">
+		<h3 class="display-4 border-bottom">@ViewData["Title"]</h3>
+	</div>
+</div>
+
+
+<div class="row mb-4">
+	<div class="col table-responsive">
+		<table class="table table-hover table-striped table-sm small">
+			<thead>
+				<tr>
+					<th>@Html.DisplayNameFor(m=>m.Email)</th>
+					<th class="text-center">@Html.DisplayNameFor(m=>m.Banned)</t>
+					<th>@Html.DisplayNameFor(m=>m.CreatedAt)</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				@if (Model == null || Model.Count() == 0)
+				{
+					<tr>
+						<td colspan="7" class="text-center">
+							<div>Herhangi bir veri bulunamadı.</div>
+						</td>
+					</tr>
+				}
+				else
+				{
+					@foreach (EBulletin bulletin in Model)
+					{
+						<tr>
+							<td>@bulletin.Email</td>
+							<td class="text-center">
+								<i class="fa fa-@(bulletin.Banned? "check text-success" : "times text-danger")"></i>
+							</td>
+							<td>@bulletin.CreatedAt</td>
+							<td class="text-center">
+								<a class="btn btn-warning btn-sm" asp-action="Edit" asp-route-id="@bulletin.Id"><i class="fa fa-edit"></i></a>
+								<a class="btn btn-danger btn-sm" asp-action="Delete" asp-route-id="@bulletin.Id"><i class="fa fa-trash"></i></a>
+							</td>
+						</tr>
+					}
+				}
+
+			</tbody>
+		</table>
+	</div>
+</div>

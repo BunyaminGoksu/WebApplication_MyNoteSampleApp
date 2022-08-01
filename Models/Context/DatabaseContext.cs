@@ -17,6 +17,7 @@ namespace WebApplication_MyNoteSampleApp.Models.Context
         public DbSet<LikedNote> LikedNotes{ get; set; }
 
         public DbSet<EmailMembership> EmailMemberships{ get; set; }
+        public DbSet<EBulletin>  EBulletins{ get; set; }
 
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

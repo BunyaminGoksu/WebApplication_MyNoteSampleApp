@@ -23,7 +23,7 @@ namespace WebApplication_MyNoteSampleApp.Controllers
            int userId = HttpContext.Session.GetInt32(Constants.UserId).Value;
 
 
-            return View(_noteService.List(userId).Data);
+            return View(_noteService.List(userId,true).Data);
         }
         public IActionResult LikedList()
         {
@@ -183,6 +183,33 @@ namespace WebApplication_MyNoteSampleApp.Controllers
 
 
             return Json(new {hasError = result.IsError});
+
+        }
+
+        [HttpPost]
+        public IActionResult removeComment(int id)
+        {
+            ServiceResult<Note> result = _noteService.removeComment(id);
+
+            return Json(new { hasError = result.IsError });
+
+        }
+
+        [HttpPost]
+        public IActionResult updateComment(int id,string text)
+        {
+            ServiceResult<Note> result = _noteService.updateComment(id,text, HttpContext);
+
+            return Json(new { hasError = result.IsError });
+
+        }
+
+        [HttpPost]
+        public IActionResult likeNote(int id)
+        {
+            ServiceResult<int> result = _noteService.changeNoteLikeState(id, HttpContext);
+
+            return Json(new { hasError = result.IsError,likeCount = result.Data});
 
         }
     }

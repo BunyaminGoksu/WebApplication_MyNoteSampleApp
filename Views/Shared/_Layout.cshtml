@@ -49,6 +49,7 @@
 										<li><hr class="dropdown-divider"></li>
 										<li><a class="dropdown-item" asp-action="Create" asp-controller="User"><i class="fa fa-plus"></i> Kullanıcı Ekle</a></li>
 										<li><a class="dropdown-item" asp-action="Index" asp-controller="User"><i class="fa fa-th-list"></i> Kullanıcıları Yönet</a></li>
+										<li><a class="dropdown-item" asp-action="Index" asp-controller="EBulletin"><i class="fa fa-th-list"></i> E-Bülten Yönetimi</a></li>
 									}
 
 								</ul>
@@ -75,7 +76,8 @@
 								{
 									<li>
 										<a class="dropdown-item" asp-action="Index" asp-controller="Home" asp-route-categoryId="@category.Id">
-											<i class="fa fa-th-list"></i> @category.Name</a>
+											<i class="fa fa-th-list"></i> @category.Name
+										</a>
 									</li>
 
 								}
@@ -145,13 +147,15 @@
 					</div>
 				</div>
 				<div class="col-3 text-end">
-					<div class="input-group">
-						<input type="text" class="form-control" placeholder="e-posta adresiniz" />
-						<button class="btn btn-primary" type="button"><i class="fa fa-send "></i> Gönder</button>
-					</div>
-					<small>
-						E-posta bülteni aboneliği için lütfen e-posta adresinizi girin.
-					</small>
+					<form method="post" asp-action="SaveEBulletinEmail" asp-controller="Home">
+						<div class="input-group">
+							<input type="text" id="EBulletinEmail" name="EBulletinEmail" class="form-control" placeholder="e-posta adresiniz" />
+							<button class="btn btn-primary" type="submit"><i class="fa fa-send "></i> Gönder</button>
+						</div>
+						<small>
+							E-posta bülteni aboneliği için lütfen e-posta adresinizi girin.
+						</small>
+					</form>
 				</div>
 			</div>
 		</div>
