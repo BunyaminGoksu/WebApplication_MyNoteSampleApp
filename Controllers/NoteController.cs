@@ -3,11 +3,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using WebApplication_MyNoteSampleApp.Business;
 using WebApplication_MyNoteSampleApp.Core;
+using WebApplication_MyNoteSampleApp.Core.Filters;
 using WebApplication_MyNoteSampleApp.Models;
 using WebApplication_MyNoteSampleApp.Models.Entities;
 
 namespace WebApplication_MyNoteSampleApp.Controllers
 {
+    [LoginFilter]
+
     public class NoteController : Controller
     {
 

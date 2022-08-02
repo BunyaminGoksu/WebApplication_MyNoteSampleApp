@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using WebApplication_MyNoteSampleApp.Business;
+using WebApplication_MyNoteSampleApp.Core.Filters;
 using WebApplication_MyNoteSampleApp.Models;
 using WebApplication_MyNoteSampleApp.Models.Entities;
 
 namespace WebApplication_MyNoteSampleApp.Controllers
 {
+    [LoginFilter]
+    [AdminFilter]
     public class CategoryController : Controller
     {
         private readonly CategoryService _categoryService;

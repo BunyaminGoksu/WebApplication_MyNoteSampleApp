@@ -6,6 +6,8 @@
         public const string UserName = "Username";
         public const string UserEmail = "UserEmail";
         public const string UserRole = "UserRole";
+
+        public const string EncrpytionSalt = "805A5DFED3B742C6B";
     }
 }
     

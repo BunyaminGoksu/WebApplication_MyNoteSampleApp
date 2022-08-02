@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 using WebApplication_MyNoteSampleApp.Business;
 using WebApplication_MyNoteSampleApp.Core;
+using WebApplication_MyNoteSampleApp.Core.Filters;
 using WebApplication_MyNoteSampleApp.Models;
 using WebApplication_MyNoteSampleApp.Models.Entities;
 
@@ -97,14 +98,20 @@ namespace WebApplication_MyNoteSampleApp.Controllers
 
             return View(model);
         }
+
+        [LoginFilter]
         public IActionResult ProfileShow()
         {
             return View();
         }
+
+        [LoginFilter]
         public IActionResult ProfileEdit()
         {
             return View();
         }
+
+        [LoginFilter]
         public IActionResult DeleteProfile()
         {
             return View();
@@ -113,7 +120,11 @@ namespace WebApplication_MyNoteSampleApp.Controllers
         {
             return View();
         }
-
+        public IActionResult Unauthorize()
+        {
+            return View();
+        }
+        [LoginFilter]
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();

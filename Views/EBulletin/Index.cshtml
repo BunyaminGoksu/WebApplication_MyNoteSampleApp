@@ -1,12 +1,18 @@
 ﻿@model IEnumerable<EBulletin>
-@{
-	ViewData["Title"] = "E-Bülten Posta Adresleri";
-}
+	@{
+		ViewData["Title"] = "E-Bülten Posta Adresleri";
+	}
 
-<div class="row mb-4">
-	<div class="col">
-		<h3 class="display-4 border-bottom">@ViewData["Title"]</h3>
+	<div class="row mb-4">
+		<div class="col">
+			<h3 class="display-4 border-bottom">@ViewData["Title"]</h3>
+		</div>
 	</div>
+
+	<div class="row mb-4">
+    <div class="col">
+        <a  class="btn btn-primary btn-sm" asp-action="SendEmails"><i class=="fa fa-plus"></i> E-Posta Mesajı Gönder</a>
+    </div>
 </div>
 
 

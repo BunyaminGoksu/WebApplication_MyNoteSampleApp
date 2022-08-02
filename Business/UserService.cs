@@ -1,4 +1,5 @@
-﻿using WebApplication_MyNoteSampleApp.Core;
+﻿using NETCore.Encrypt.Extensions;
+using WebApplication_MyNoteSampleApp.Core;
 using WebApplication_MyNoteSampleApp.Models;
 using WebApplication_MyNoteSampleApp.Models.Context;
 using WebApplication_MyNoteSampleApp.Models.Entities;
@@ -35,7 +36,7 @@ namespace WebApplication_MyNoteSampleApp.Business
             {
                 Username = model.Username,
                 Email = model.Email,
-                Password = model.Password,
+                Password = $"{Constants.EncrpytionSalt}{model.Password}".MD5(),
                 IsActive = true,
                 IsAdmin = false,
                 CreatedUser = "register",

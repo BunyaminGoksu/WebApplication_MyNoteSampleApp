@@ -53,6 +53,19 @@ namespace WebApplication_MyNoteSampleApp.Business
 
         }
 
+        public ServiceResult<List<EBulletin>> ListExceptBanned()
+        {
+            var eBulletins = _db.EBulletins.Where(x=> x.Banned == false).ToList();
+
+            ServiceResult<List<EBulletin>> result = new ServiceResult<List<EBulletin>>();
+
+            result.Data = eBulletins;
+
+            return result;
+
+        }
+
+
         public ServiceResult<EBulletin> Find(int id)
         {
             ServiceResult<EBulletin> result = new ServiceResult<EBulletin>()

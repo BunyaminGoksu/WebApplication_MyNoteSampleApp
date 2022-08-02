@@ -1,10 +1,19 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Net;
+using System.Net.Mail;
 using WebApplication_MyNoteSampleApp.Business;
+using WebApplication_MyNoteSampleApp.Core;
+using WebApplication_MyNoteSampleApp.Core.Filters;
 using WebApplication_MyNoteSampleApp.Models;
 using WebApplication_MyNoteSampleApp.Models.Entities;
 
 namespace WebApplication_MyNoteSampleApp.Controllers
 {
+
+    [LoginFilter]
+    [AdminFilter]
+
     public class EBulletinController : Controller
     {
 
@@ -39,7 +48,7 @@ namespace WebApplication_MyNoteSampleApp.Controllers
 
             return View(model);
         }
-     
+
         [HttpPost]
         public IActionResult Edit(int id, EBulletinEditViewModel model)
         {
@@ -85,6 +94,26 @@ namespace WebApplication_MyNoteSampleApp.Controllers
             }
 
             return View(_bulletinService.Find(id).Data);
+        }
+
+        public IActionResult SendEmails()
+        {
+            var bulletins = _bulletinService.ListExceptBanned().Data;
+
+            var list = bulletins.Select(x => new SelectListItem(x.Email, x.Email)).ToList();
+
+            EBulletinSendEmailsViewModel model = new EBulletinSendEmailsViewModel();
+            model.EmailAdresses = new SelectList(list);
+
+            return View(model);
+        }
+        [HttpPost]
+        public IActionResult SendEmails(EBulletinSendEmailsViewModel model)
+        {
+            MailHelper mailHelper = new MailHelper();
+            mailHelper.SendMail(model.Subject, model.Text, model.Emails.ToArray());
+
+            return RedirectToAction(nameof(Index));
         }
 
     }
