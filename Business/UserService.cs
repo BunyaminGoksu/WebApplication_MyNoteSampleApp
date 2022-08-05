@@ -73,12 +73,13 @@ namespace WebApplication_MyNoteSampleApp.Business
 
             model.Username = model.Username.Trim().ToLower();
 
-          //  var user = _db.Users.Any(x => x.Username.ToLower() == model.Username
-          //&& x.Password == model.Password);
+            //  var user = _db.Users.Any(x => x.Username.ToLower() == model.Username
+            //&& x.Password == model.Password);
 
+            var passwordHashed = $"{Constants.EncrpytionSalt}{model.Password}".MD5();
 
             var user = _db.Users.SingleOrDefault(x => x.Username.ToLower() == model.Username
-            && x.Password == model.Password);
+            && x.Password == passwordHashed);
 
 
             if (user == null)
@@ -92,6 +93,34 @@ namespace WebApplication_MyNoteSampleApp.Business
             }
 
 
+            return result;
+        }
+
+        public ServiceResult<object> ChangePassword(string newPass,HttpContext httpContext)
+        {
+            ServiceResult<object> result = new ServiceResult<object>();
+
+            newPass = newPass?.Trim();
+            if (string.IsNullOrEmpty(newPass))
+            {
+                result.AddError("Şifre alanı boş olamaz.");
+            }
+            else
+            {
+                var userId = httpContext.Session.GetInt32(Constants.UserId).Value;
+                var passwordHashed = $"{Constants.EncrpytionSalt}{newPass}".MD5();
+
+                var user = _db.Users.Find(userId);
+
+                user.Password = passwordHashed;
+                if (_db.SaveChanges() == 0)
+                {
+                    result.AddError("İşlem yapılamadı.");
+                }
+
+            }
+
+          
             return result;
         }
 

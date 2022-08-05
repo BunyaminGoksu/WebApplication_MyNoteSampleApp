@@ -111,6 +111,61 @@ namespace WebApplication_MyNoteSampleApp.Controllers
             return View();
         }
 
+        [HttpPost]
+        public IActionResult ProfilePasswordChange(string newPassword)
+        {
+           var result = _userService.ChangePassword(newPassword, HttpContext);
+          
+
+            if (!result.IsError)
+            {
+                ViewData["SuccessMessage"] = "Şifre değişiminiz yapılmıştır";
+            }
+            else
+            {
+                foreach (string error in result.Errors)
+                {
+                    ModelState.AddModelError(string.Empty, error);
+                }
+            }
+            return View(nameof(ProfileEdit));
+        }
+
+        [HttpPost]
+        public IActionResult ProfileImageSave(IFormFile profileImage)
+        {
+
+            try
+            {
+                string uploadPath = Path.Combine(Environment.CurrentDirectory,"wwwroot", "uploads");
+                
+                if (!Directory.Exists(uploadPath))
+                    Directory.CreateDirectory(uploadPath);
+
+                int userId = HttpContext.Session.GetInt32(Constants.UserId).Value;
+
+                string fileName = $"profile_{userId}.jpg";
+                string filePath = Path.Combine(uploadPath, fileName);
+
+                using (FileStream stream = System.IO.File.Create(filePath)) 
+                {
+                    profileImage.CopyTo(stream);
+                }
+              
+                ViewData["SuccessMessage"] = "Profil resminiz güncellenmiştir";
+
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, "Hata oluştu profil resmi güncellenemedi");
+            }
+
+            return View(nameof(ProfileEdit));
+
+           
+
+        }
+
         [LoginFilter]
         public IActionResult DeleteProfile()
         {
