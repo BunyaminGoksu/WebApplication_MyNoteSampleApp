@@ -1,4 +1,6 @@
-﻿@{
+﻿@model ProfileInfoEditViewModel
+
+@{
 	ViewData["Title"] = "Profil Düzenle";
 	int userId = ViewContext.HttpContext.Session.GetInt32(Constants.UserId).Value;
 }
@@ -33,17 +35,13 @@
 		}
 		<form method="post" asp-action="ProfileInfoSave">
 			<div class="form-group mb-3">
-				<label for="fullname" class="font-weight-bold small">Ad Soyad</label>
-				<input type="text" class="form-control" id="fullname" placeholder="name surname">
+				<label asp-for="FullName" class="font-weight-bold small"></label>
+				<input asp-for="FullName" class="form-control"  placeholder="@NameData.GetFullName()">
 			</div>
+		
 			<div class="form-group mb-3">
-				<label for="username" class="font-weight-bold small">Kullanıcı Adı</label>
-				<input type="text" class="form-control" id="username" placeholder="username">
-				@*<div  class="form-text">We'll never share your email with anyone else.</div>*@
-			</div>
-			<div class="form-group mb-3">
-				<label for="email" class="font-weight-bold small">E-posta Adresi</label>
-				<input type="email" class="form-control" id="email" placeholder="abc@mail.com">
+				<label asp-for="Email" class="font-weight-bold small"></label>
+				<input asp-for="Email" class="form-control" placeholder="@NetworkData.GetEmail()">
 			</div>
 
 			<div class="text-center">

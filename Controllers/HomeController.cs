@@ -102,13 +102,61 @@ namespace WebApplication_MyNoteSampleApp.Controllers
         [LoginFilter]
         public IActionResult ProfileShow()
         {
-            return View();
+            ProfileInfoEditViewModel model = GetProfileEditViewModel();
+            return View(model);
         }
 
         [LoginFilter]
         public IActionResult ProfileEdit()
         {
-            return View();
+            ProfileInfoEditViewModel model =  GetProfileEditViewModel();
+            return View(model);
+        }
+
+        private ProfileInfoEditViewModel GetProfileEditViewModel()
+        {
+            int userId = HttpContext.Session.GetInt32(Constants.UserId).Value;
+            var user = _userService.Find(userId).Data;
+
+            ProfileInfoEditViewModel model = new ProfileInfoEditViewModel();
+            model.Email = user.Email;
+            model.FullName = user.FullName;
+            model.Username = user.Username;
+
+            return model;
+        }
+
+        [HttpPost]
+        public IActionResult ProfileInfoSave(ProfileInfoEditViewModel info)
+        {
+            if (ModelState.IsValid)
+            {
+                ServiceResult<object> result = (ServiceResult<object>)_userService.UpdateUserInfo(info, HttpContext);
+
+
+                if (!result.IsError)
+                {
+                    ViewData["SuccessMessage"] = "Bilgileriniz kaydedilmiştir.";
+                }
+                else
+                {
+                    foreach (string error in result.Errors)
+                    {
+                        ModelState.AddModelError(string.Empty, error);
+                    }
+                }
+            }
+            else
+            {
+                return View(nameof(ProfileEdit), info);
+
+            }
+
+
+            ProfileInfoEditViewModel model = GetProfileEditViewModel();
+
+            return View(nameof(ProfileEdit), model);
+
         }
 
         [HttpPost]
@@ -128,7 +176,11 @@ namespace WebApplication_MyNoteSampleApp.Controllers
                     ModelState.AddModelError(string.Empty, error);
                 }
             }
-            return View(nameof(ProfileEdit));
+
+            ProfileInfoEditViewModel model = GetProfileEditViewModel();
+
+
+            return View(nameof(ProfileEdit),model);
         }
 
         [HttpPost]
@@ -160,7 +212,9 @@ namespace WebApplication_MyNoteSampleApp.Controllers
                 ModelState.AddModelError(string.Empty, "Hata oluştu profil resmi güncellenemedi");
             }
 
-            return View(nameof(ProfileEdit));
+            ProfileInfoEditViewModel model = GetProfileEditViewModel();
+
+            return View(nameof(ProfileEdit),model);
 
            
 

@@ -1,5 +1,10 @@
-﻿@{
+﻿@model ProfileInfoEditViewModel
+
+
+
+@{
     ViewData["Title"] = "Profil";
+    int userId = ViewContext.HttpContext.Session.GetInt32(Constants.UserId).Value;
 }
 
 <div class="row p-4">
@@ -9,17 +14,17 @@
 </div>
 <div class="row p-4">
     <div class="col-3  text-center">
-        <img src="https://picsum.photos/id/1005/128" class="rounded-circle img-thumbnail" /> 
+        <img src="/uploads/profile_@(userId).jpg " class="rounded-circle img-thumbnail" /> 
     </div>
     <div class="col-4">
-        <h3 class="display-4 mb-4">Bünyamin Göksu</h3>
+        <h3 class="display-4 mb-4">@Model.FullName</h3>
         <div class="mb-3">
             <div><b>Kulanıcı Adı</b></div>
-            <div>Bünyamin Göksu</div>
+            <div>@Model.Username</div>
         </div>
          <div class="mb-3">
             <div><b>E-posta Adresi</b></div>
-            <div>goksu-bunyamin@hotmail.com </div>
+            <div><a href="mailto:@Model.Email" target="_blank">@Model.Email</a></div>
         </div>
     </div>
 </div>

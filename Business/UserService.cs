@@ -172,6 +172,44 @@ namespace WebApplication_MyNoteSampleApp.Business
 
         }
 
+        public object UpdateUserInfo(ProfileInfoEditViewModel model, HttpContext httpContext)
+        {
+            var result = new ServiceResult<object>();
+
+
+            model.FullName = model.FullName.Trim();
+            model.Email = model.Email.Trim().ToLower();
+
+            int userId = httpContext.Session.GetInt32(Constants.UserId).Value;
+
+            if (_db.Users.Any(x => x.Email.ToLower() == model.Email.ToLower() && x.Id != userId))
+            {
+                result.AddError($"'{model.Email}' adresi zaten kayıtlıdır.");
+                return result;
+            }
+        
+
+            User user = _db.Users.Find(userId);
+
+            user.FullName = model.FullName;
+            user.Email = model.Email; 
+            user.ModifiedUser = httpContext.Session.GetString(Constants.UserName);
+            user.ModifiedAt = DateTime.Now;
+
+
+            if (_db.SaveChanges() == 0)
+            {
+                result.AddError("Kayıt yapılamadı.");
+            }
+            else
+            {
+                result.Data = user;
+
+            }
+
+            return result;
+        }
+
         public ServiceResult<object> Remove(int id)
         {
             ServiceResult<object> result = new ServiceResult<object>();

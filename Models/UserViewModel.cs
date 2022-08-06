@@ -2,11 +2,11 @@
 
 namespace WebApplication_MyNoteSampleApp.Models
 {
-	public class UserViewModel
+    public class UserViewModel
     {
-        
-           [StringLength(60, ErrorMessage = "{0} alanı maksimum {1} karakter olabilir"),
-            Display(Name = "Ad Soyad")]
+
+        [StringLength(60, ErrorMessage = "{0} alanı maksimum {1} karakter olabilir"),
+         Display(Name = "Ad Soyad")]
         public string FullName { get; set; }
 
         [Required(ErrorMessage = "{0} alanı boş geçilemez"),
